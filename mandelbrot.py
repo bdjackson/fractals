@@ -6,6 +6,8 @@ import os.path
 import optparse
 import time
 
+import numpy as np
+
 import pickle
 # =============================================================================
 
@@ -64,49 +66,75 @@ class MandelbrotSet(object):
     """
     # -----------------------------------------------------------------------------
     def __init__( self
-                , res
+                , x_res
                 , x_min
                 , x_max
+                , y_res
                 , y_min
                 , y_max
                 , max_itr
                 ):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        self.res = res
-        self.x_min  = x_min
-        self.x_max  = x_max
-        self.y_min  = y_min
-        self.y_max  = y_max
+        self.x_res   = x_res
+        self.x_min   = x_min
+        self.x_max   = x_max
+        self.y_res   = y_res
+        self.y_min   = y_min
+        self.y_max   = y_max
         self.max_itr = max_itr
 
-        self.x_pix = res*(x_max-x_min)
-        self.y_pix = res*(y_max-y_min)
+        self.x_pix = int(x_res*(x_max-x_min) + 1)
+        self.y_pix = int(y_res*(y_max-y_min) + 1)
 
-        self.x_points = [x_min + i*res for i in xrange(self.x_pix)]
-        self.y_points = [y_min + i*res for i in xrange(self.y_pix)]
+        self.x_points = [x_min + i/float(x_res) for i in xrange(self.x_pix)]
+        self.y_points = [y_min + i/float(y_res) for i in xrange(self.y_pix)]
+        self.data = np.zeros((self.y_pix, self.x_pix), int)
 
-        self.mandelbrot_set = []
-        self.data = []
-        for x in self.x_points:
-            self.data.append([])
-            for y in self.y_points:
+        total_pix = self.x_pix * self.y_pix
+        one_percent_mark = total_pix / 100
+        processed_pix = 0
+        for y_it, y in enumerate(self.y_points):
+            for x_it, x in enumerate(self.x_points):
+                # print 'y_it: %d -- x_it: %d' % (y_it, x_it)
                 mp = MandelbrotPoint(x, y, max_itr)
-                self.mandelbrot_set.append(mp)
-                self.data[-1].append([mp.re, mp.im, mp.escape_speed])
 
-        # for mp in self.mandelbrot_set:
-        #     print 're: %s - im: %s -- %s' % (mp.re, mp.im, mp.escape_speed)
+                es = mp.escape_speed
+                if not es == -1:
+                    self.data[y_it][x_it] = es
+
+                processed_pix += 1
+                if processed_pix%one_percent_mark == 0:
+                    print 'Progress: %0.2f %%' % (100*float(processed_pix)/total_pix)
+
+    # -----------------------------------------------------------------------------
+    def dump(self, out_file_name):
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        out_dict = { 'data':self.data
+                   , 'x_res':self.x_res
+                   , 'x_min':self.x_min
+                   , 'x_max':self.x_max
+                   , 'y_res':self.y_res
+                   , 'y_min':self.y_min
+                   , 'y_max':self.x_max
+                   , 'max_itr':self.max_itr
+                   }
+        out_file = open(out_file_name, 'wb')
+        pickle.dump(out_dict, out_file)
+        out_file.close()
 
 
 # -----------------------------------------------------------------------------
 def main():
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # m = MandelbrotSet(-2, 1, 100, -1, 1, 100, 100)
-    # m = MandelbrotSet(-2, 1, 300, -1, 1, 200, 100)
-    # m = MandelbrotSet(-2, 1, 300, -1, 1, 200, 1000)
-    m = MandelbrotSet(100, -2, +1, -1, 1, 100)
-
-    pickle.dump(m.data, open('mand.p', 'wb'))
+    m = MandelbrotSet( x_res = 1000
+                     , x_min = -2
+                     , x_max = +0.8
+                     , y_res = 1000
+                     , y_min = -1.2
+                     , y_max = +1.2
+                     , max_itr = 75
+                     )
+    m.dump('mand.p')
 
 
 # =============================================================================
