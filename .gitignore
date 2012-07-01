@@ -1,2 +1,5 @@
+.swo
 *.png
 *.swp
+*.p
+*.pyc
