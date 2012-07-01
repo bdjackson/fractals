@@ -75,6 +75,12 @@ class MandelbrotSet(object):
                 , max_itr
                 ):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        print '------------------------------------------------------------------'
+        print 'Generating Mandelbrot Set using:'
+        print '\tx: [%s, %s] - res: %s' % (x_min, x_max, x_res)
+        print '\ty: [%s, %s] - res: %s' % (y_min, y_max, y_res)
+        print 'maximum iterations: %d' % max_itr
+
         self.x_res   = x_res
         self.x_min   = x_min
         self.x_max   = x_max
@@ -87,11 +93,11 @@ class MandelbrotSet(object):
         self.y_pix = int(y_res*(y_max-y_min) + 1)
 
         self.x_points = [x_min + i/float(x_res) for i in xrange(self.x_pix)]
-        self.y_points = [y_min + i/float(y_res) for i in xrange(self.y_pix)]
+        self.y_points = [y_min + i/float(y_res) for i in xrange(self.y_pix, 0, -1)]
         self.data = np.zeros((self.y_pix, self.x_pix), int)
 
         total_pix = self.x_pix * self.y_pix
-        one_percent_mark = total_pix / 100
+        five_percent_mark = int(total_pix / 20)
         processed_pix = 0
         for y_it, y in enumerate(self.y_points):
             for x_it, x in enumerate(self.x_points):
@@ -103,7 +109,7 @@ class MandelbrotSet(object):
                     self.data[y_it][x_it] = es
 
                 processed_pix += 1
-                if processed_pix%one_percent_mark == 0:
+                if (processed_pix%five_percent_mark) == 0:
                     print 'Progress: %0.2f %%' % (100*float(processed_pix)/total_pix)
 
     # -----------------------------------------------------------------------------
@@ -115,7 +121,7 @@ class MandelbrotSet(object):
                    , 'x_max':self.x_max
                    , 'y_res':self.y_res
                    , 'y_min':self.y_min
-                   , 'y_max':self.x_max
+                   , 'y_max':self.y_max
                    , 'max_itr':self.max_itr
                    }
         out_file = open(out_file_name, 'wb')
@@ -126,15 +132,37 @@ class MandelbrotSet(object):
 # -----------------------------------------------------------------------------
 def main():
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    m = MandelbrotSet( x_res = 1000
+    m = MandelbrotSet( x_res = 5000
                      , x_min = -2
                      , x_max = +0.8
-                     , y_res = 1000
+                     , y_res = 5000
                      , y_min = -1.2
                      , y_max = +1.2
-                     , max_itr = 75
+                     , max_itr = 100
                      )
-    m.dump('mand.p')
+    m.dump('mand_full.p')
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    m = MandelbrotSet( x_res = 20000
+                     , x_min = -0.65
+                     , x_max = +0.45
+                     , y_res = 20000
+                     , y_min = +0.45
+                     , y_max = +1.1
+                     , max_itr = 250
+                     )
+    m.dump('mand_top.p')
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    m = MandelbrotSet( x_res = 20000
+                     , x_min = -1.1
+                     , x_max = -0.55
+                     , y_res = 20000
+                     , y_min = +0.0
+                     , y_max = +0.4
+                     , max_itr = 250
+                     )
+    m.dump('mand_valley.p')
 
 
 # =============================================================================
