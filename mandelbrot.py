@@ -98,7 +98,6 @@ class MandelbrotSet(object):
         #     print 're: %s - im: %s -- %s' % (mp.re, mp.im, mp.escape_speed)
 
 
-
 # -----------------------------------------------------------------------------
 def main():
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -107,7 +106,7 @@ def main():
     # m = MandelbrotSet(-2, 1, 300, -1, 1, 200, 1000)
     m = MandelbrotSet(100, -2, +1, -1, 1, 100)
 
-    # pickle.dump(m, open('mand.p', 'wb'))
+    pickle.dump(m.data, open('mand.p', 'wb'))
 
 
 # =============================================================================
