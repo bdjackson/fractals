@@ -46,15 +46,9 @@ class MandelbrotPoint(object):
         while not escaped and itr < self.max_itr:
             itr += 1
 
-            # print '============================'
-            # print '%s + %s: ' % (z, c)
-            # z = z**2 + c
             z *= z
             z += c
 
-            # print '\t%s' % z
-            # if abs(z) > 2.:
-            # if abs(z) > 3.:
             if abs(z) > self.escape_radius:
                 escaped = True
 
@@ -120,34 +114,30 @@ class MandelbrotSet(object):
 
         self.x_points = [x_min + i/float(x_res) for i in xrange(self.x_pix)]
         self.y_points = [y_min + i/float(y_res) for i in xrange(self.y_pix, 0, -1)]
-        self.escape_speed        = np.zeros((self.y_pix, self.x_pix), int)
+        # self.escape_speed        = np.zeros((self.y_pix, self.x_pix), int)
+        self.escape_speed        = 0
         self.normed_escape_speed = np.zeros((self.y_pix, self.x_pix), float)
 
         total_pix = self.x_pix * self.y_pix
         one_percent_mark = int(total_pix / 100)
+        next_milestone = 0
         processed_pix = 0
         for y_it, y in enumerate(self.y_points):
             for x_it, x in enumerate(self.x_points):
-                # print 'y_it: %d -- x_it: %d' % (y_it, x_it)
                 mp = MandelbrotPoint(x, y, max_itr, escape_radius)
 
-                # es = mp.escape_speed
-                # if not es == -1:
-                #     self.escape_speed[y_it][x_it] = es
                 if not mp.in_set:
-                    self.escape_speed[y_it][x_it] = mp.escape_speed
+                    # self.escape_speed[y_it][x_it] = mp.escape_speed
                     self.normed_escape_speed[y_it][x_it] = mp.normed_escape_speed
-                    # self.escape_speed[y_it][x_it]        = 10*mp.escape_speed
-                    # self.normed_escape_speed[y_it][x_it] = 100*mp.normed_escape_speed
-                    # self.normed_escape_speed[y_it][x_it] = 1000*mp.normed_escape_speed
-                else:
-                    self.escape_speed[y_it][x_it]        = 0
-                    self.normed_escape_speed[y_it][x_it] = 0
-
+                # else:
+                #     # self.escape_speed[y_it][x_it]        = 0
+                #     self.normed_escape_speed[y_it][x_it] = 0
 
                 processed_pix += 1
-                if (processed_pix%one_percent_mark) == 0:
+                # if (processed_pix%one_percent_mark) == 0:
+                if processed_pix > next_milestone:
                     print 'Progress: %0.2f %%' % round(100*float(processed_pix)/total_pix)
+                    next_milestone += one_percent_mark
 
     # -----------------------------------------------------------------------------
     def dump(self, out_file_name):
@@ -170,83 +160,85 @@ class MandelbrotSet(object):
 # -----------------------------------------------------------------------------
 def main():
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    m = MandelbrotSet( x_res = 5000
-    # m = MandelbrotSet( x_res = 100
-                     # , x_min = -2
-                     # , x_max = +0.8
-                     , x_min = -3.0
-                     , x_max = +1.8
-                     , y_res = 5000
-                     # , y_res = 100
-                     # , y_min = -1.2
-                     # , y_max = +1.2
-                     , y_min = -1.5
-                     , y_max = +1.5
-                     , max_itr = 150
-                     # , max_itr = 20
-                     # , max_itr = 50
-                     # , escape_radius = 2
-                     , escape_radius = 1000
-                     )
-    m.dump('mand_full.p')
+    # m = MandelbrotSet( x_res = 3000
+    # # m = MandelbrotSet( x_res = 100
+    #                  # , x_min = -2
+    #                  # , x_max = +0.8
+    #                  , x_min = -3.0
+    #                  , x_max = +1.8
+    #                  , y_res = 3000
+    #                  # , y_res = 100
+    #                  # , y_min = -1.2
+    #                  # , y_max = +1.2
+    #                  , y_min = -1.5
+    #                  , y_max = +1.5
+    #                  , max_itr = 150
+    #                  # , max_itr = 20
+    #                  # , max_itr = 50
+    #                  # , escape_radius = 2
+    #                  , escape_radius = 1000
+    #                  )
+    # m.dump('mand_full.p')
+
+    # # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # m = MandelbrotSet( x_res = 7000
+    # # m = MandelbrotSet( x_res = 500
+    #                  , x_min = -0.66
+    #                  , x_max = +0.46
+    #                  , y_res = 7000
+    #                  # , y_res = 500
+    #                  , y_min = +0.5
+    #                  , y_max = +1.2
+    #                  , max_itr = 250
+    #                  # , max_itr = 20
+    #                  # , max_itr = 50
+    #                  # , escape_radius = 2
+    #                  , escape_radius = 1000
+    #                  )
+    # m.dump('mand_top.p')
+
+    # # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # m = MandelbrotSet( x_res = 40000
+    # # m = MandelbrotSet( x_res = 500
+    #                  , x_min = -1.1
+    #                  , x_max = -0.55
+    #                  , y_res = 20000
+    #                  # , y_res = 500
+    #                  , y_min = +0.0
+    #                  , y_max = +0.34375
+    #                  , max_itr = 500
+    #                  # , max_itr = 20
+    #                  # , max_itr = 50
+    #                  # , escape_radius = 2
+    #                  , escape_radius = 1000
+    #                  )
+    # m.dump('mand_valley.p')
+
+    # # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # m = MandelbrotSet( x_res = 20000
+    # # m = MandelbrotSet( x_res = 1000
+    #                  , x_min = -1.862
+    #                  , x_max = -0.55
+    #                  , y_res = 20000
+    #                  # , y_res = 1000
+    #                  , y_min = -0.41
+    #                  , y_max = +0.41
+    #                  , max_itr = 250
+    #                  # , max_itr = 20
+    #                  # , max_itr = 50
+    #                  # , escape_radius = 2
+    #                  , escape_radius = 1000
+    #                  )
+    # m.dump('mand_head.p')
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # m = MandelbrotSet( x_res = 26000
     m = MandelbrotSet( x_res = 20000
-    # m = MandelbrotSet( x_res = 500
-                     , x_min = -0.66
-                     , x_max = +0.46
-                     , y_res = 20000
-                     # , y_res = 500
-                     , y_min = +0.5
-                     , y_max = +1.2
-                     , max_itr = 250
-                     # , max_itr = 20
-                     # , max_itr = 50
-                     # , escape_radius = 2
-                     , escape_radius = 1000
-                     )
-    m.dump('mand_top.p')
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    m = MandelbrotSet( x_res = 40000
-    # m = MandelbrotSet( x_res = 500
-                     , x_min = -1.1
-                     , x_max = -0.55
-                     , y_res = 20000
-                     # , y_res = 500
-                     , y_min = +0.0
-                     , y_max = +0.34375
-                     , max_itr = 500
-                     # , max_itr = 20
-                     # , max_itr = 50
-                     # , escape_radius = 2
-                     , escape_radius = 1000
-                     )
-    m.dump('mand_valley.p')
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    m = MandelbrotSet( x_res = 20000
-    # m = MandelbrotSet( x_res = 1000
-                     , x_min = -1.862
-                     , x_max = -0.55
-                     , y_res = 20000
-                     # , y_res = 1000
-                     , y_min = -0.41
-                     , y_max = +0.41
-                     , max_itr = 250
-                     # , max_itr = 20
-                     # , max_itr = 50
-                     # , escape_radius = 2
-                     , escape_radius = 1000
-                     )
-    m.dump('mand_head.p')
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    m = MandelbrotSet( x_res = 60000
     # m = MandelbrotSet( x_res = 1000
                      , x_min = -1.53
                      , x_max = -1.35
-                     , y_res = 60000
+                     # , y_res = 26000
+                     , y_res = 20000
                      # , y_res = 1000
                      , y_min = -0.055
                      , y_max = +0.055
