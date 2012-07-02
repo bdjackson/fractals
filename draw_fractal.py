@@ -213,16 +213,26 @@ def draw_fractal(in_file_name):
 # -----------------------------------------------------------------------------
 def main():
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # print 'printing full mandelbrot set'
-    # draw_fractal('mand_full')
-    # print 'printing top portion of mandelbrot set'
-    # draw_fractal('mand_top')
-    # print 'printing valley region of mandelbrot set'
-    # draw_fractal('mand_valley')
-    # print 'printing head of mandelbrot set'
-    # draw_fractal('mand_head')
-    print 'printing satelite of mandelbrot set'
-    draw_fractal('mand_satelite')
+    if len(sys.argv) == 1:
+        sys.argv.append('full')
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    for region in sys.argv[1:]:
+        if region == 'full':
+            print 'printing full mandelbrot set'
+            draw_fractal('mand_full')
+        if region == 'top':
+            print 'printing top portion of mandelbrot set'
+            draw_fractal('mand_top')
+        if region == 'valley':
+            print 'printing valley region of mandelbrot set'
+            draw_fractal('mand_valley')
+        if region == 'head':
+            print 'printing head of mandelbrot set'
+            draw_fractal('mand_head')
+        if region == 'satelite':
+            print 'printing satelite of mandelbrot set'
+            draw_fractal('mand_satelite')
 
 # =============================================================================
 if __name__ == '__main__':

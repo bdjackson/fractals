@@ -160,97 +160,107 @@ class MandelbrotSet(object):
 # -----------------------------------------------------------------------------
 def main():
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # m = MandelbrotSet( x_res = 3000
-    # # m = MandelbrotSet( x_res = 100
-    #                  # , x_min = -2
-    #                  # , x_max = +0.8
-    #                  , x_min = -3.0
-    #                  , x_max = +1.8
-    #                  , y_res = 3000
-    #                  # , y_res = 100
-    #                  # , y_min = -1.2
-    #                  # , y_max = +1.2
-    #                  , y_min = -1.5
-    #                  , y_max = +1.5
-    #                  , max_itr = 150
-    #                  # , max_itr = 20
-    #                  # , max_itr = 50
-    #                  # , escape_radius = 2
-    #                  , escape_radius = 1000
-    #                  )
-    # m.dump('mand_full.p')
-
-    # # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # m = MandelbrotSet( x_res = 7000
-    # # m = MandelbrotSet( x_res = 500
-    #                  , x_min = -0.66
-    #                  , x_max = +0.46
-    #                  , y_res = 7000
-    #                  # , y_res = 500
-    #                  , y_min = +0.5
-    #                  , y_max = +1.2
-    #                  , max_itr = 250
-    #                  # , max_itr = 20
-    #                  # , max_itr = 50
-    #                  # , escape_radius = 2
-    #                  , escape_radius = 1000
-    #                  )
-    # m.dump('mand_top.p')
-
-    # # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # m = MandelbrotSet( x_res = 40000
-    # # m = MandelbrotSet( x_res = 500
-    #                  , x_min = -1.1
-    #                  , x_max = -0.55
-    #                  , y_res = 20000
-    #                  # , y_res = 500
-    #                  , y_min = +0.0
-    #                  , y_max = +0.34375
-    #                  , max_itr = 500
-    #                  # , max_itr = 20
-    #                  # , max_itr = 50
-    #                  # , escape_radius = 2
-    #                  , escape_radius = 1000
-    #                  )
-    # m.dump('mand_valley.p')
-
-    # # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # m = MandelbrotSet( x_res = 20000
-    # # m = MandelbrotSet( x_res = 1000
-    #                  , x_min = -1.862
-    #                  , x_max = -0.55
-    #                  , y_res = 20000
-    #                  # , y_res = 1000
-    #                  , y_min = -0.41
-    #                  , y_max = +0.41
-    #                  , max_itr = 250
-    #                  # , max_itr = 20
-    #                  # , max_itr = 50
-    #                  # , escape_radius = 2
-    #                  , escape_radius = 1000
-    #                  )
-    # m.dump('mand_head.p')
+    if len(sys.argv) == 1:
+        sys.argv.append('full')
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # m = MandelbrotSet( x_res = 26000
-    m = MandelbrotSet( x_res = 20000
-    # m = MandelbrotSet( x_res = 1000
-                     , x_min = -1.53
-                     , x_max = -1.35
-                     # , y_res = 26000
-                     , y_res = 20000
-                     # , y_res = 1000
-                     , y_min = -0.055
-                     , y_max = +0.055
-                     # , max_itr = 250
-                     , max_itr = 500
-                     # , max_itr = 20
-                     # , max_itr = 50
-                     # , escape_radius = 2
-                     , escape_radius = 1000
-                     )
-    m.dump('mand_satelite.p')
+    for region in sys.argv[1:]:
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        if region == 'full':
+            m = MandelbrotSet( x_res = 3000
+            # m = MandelbrotSet( x_res = 100
+                             # , x_min = -2
+                             # , x_max = +0.8
+                             , x_min = -3.0
+                             , x_max = +1.8
+                             , y_res = 3000
+                             # , y_res = 100
+                             # , y_min = -1.2
+                             # , y_max = +1.2
+                             , y_min = -1.5
+                             , y_max = +1.5
+                             , max_itr = 150
+                             # , max_itr = 20
+                             # , max_itr = 50
+                             # , escape_radius = 2
+                             , escape_radius = 1000
+                             )
+            m.dump('mand_full.p')
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        if region == 'top':
+            m = MandelbrotSet( x_res = 7000
+            # m = MandelbrotSet( x_res = 500
+                             , x_min = -0.66
+                             , x_max = +0.46
+                             , y_res = 7000
+                             # , y_res = 500
+                             , y_min = +0.5
+                             , y_max = +1.2
+                             , max_itr = 250
+                             # , max_itr = 20
+                             # , max_itr = 50
+                             # , escape_radius = 2
+                             , escape_radius = 1000
+                             )
+            m.dump('mand_top.p')
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        if region == 'valley':
+            m = MandelbrotSet( x_res = 40000
+            # m = MandelbrotSet( x_res = 500
+                             , x_min = -1.1
+                             , x_max = -0.55
+                             , y_res = 20000
+                             # , y_res = 500
+                             , y_min = +0.0
+                             , y_max = +0.34375
+                             , max_itr = 500
+                             # , max_itr = 20
+                             # , max_itr = 50
+                             # , escape_radius = 2
+                             , escape_radius = 1000
+                             )
+            m.dump('mand_valley.p')
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        if region == 'head':
+            m = MandelbrotSet( x_res = 20000
+            # m = MandelbrotSet( x_res = 1000
+                             , x_min = -1.862
+                             , x_max = -0.55
+                             , y_res = 20000
+                             # , y_res = 1000
+                             , y_min = -0.41
+                             , y_max = +0.41
+                             , max_itr = 250
+                             # , max_itr = 20
+                             # , max_itr = 50
+                             # , escape_radius = 2
+                             , escape_radius = 1000
+                             )
+            m.dump('mand_head.p')
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        if region == 'satelite':
+            # m = MandelbrotSet( x_res = 26000
+            m = MandelbrotSet( x_res = 20000
+            # m = MandelbrotSet( x_res = 1000
+                             , x_min = -1.53
+                             , x_max = -1.35
+                             # , y_res = 26000
+                             , y_res = 20000
+                             # , y_res = 1000
+                             , y_min = -0.055
+                             , y_max = +0.055
+                             # , max_itr = 250
+                             , max_itr = 500
+                             # , max_itr = 20
+                             # , max_itr = 50
+                             # , escape_radius = 2
+                             , escape_radius = 1000
+                             )
+            m.dump('mand_satelite.p')
 
 # =============================================================================
 if __name__ == '__main__':
