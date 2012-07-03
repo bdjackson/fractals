@@ -84,10 +84,9 @@ class MandelbrotSet(object):
     """
     # -----------------------------------------------------------------------------
     def __init__( self
-                , x_res
+                , res
                 , x_min
                 , x_max
-                , y_res
                 , y_min
                 , y_max
                 , max_itr
@@ -96,24 +95,23 @@ class MandelbrotSet(object):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         print '------------------------------------------------------------------'
         print 'Generating Mandelbrot Set using:'
-        print '\tx: [%s, %s] - res: %s' % (x_min, x_max, x_res)
-        print '\ty: [%s, %s] - res: %s' % (y_min, y_max, y_res)
+        print '\tx: [%s, %s] - res: %s' % (x_min, x_max, res)
+        print '\ty: [%s, %s] - res: %s' % (y_min, y_max, res)
         print 'maximum iterations: %d' % max_itr
 
-        self.x_res   = x_res
-        self.x_min   = x_min
-        self.x_max   = x_max
-        self.y_res   = y_res
-        self.y_min   = y_min
-        self.y_max   = y_max
-        self.max_itr = max_itr
+        self.res           = res
+        self.x_min         = x_min
+        self.x_max         = x_max
+        self.y_min         = y_min
+        self.y_max         = y_max
+        self.max_itr       = max_itr
         self.escape_radius = escape_radius
 
-        self.x_pix = int(x_res*(x_max-x_min) + 1)
-        self.y_pix = int(y_res*(y_max-y_min) + 1)
+        self.x_pix = int(res*(x_max-x_min) + 1)
+        self.y_pix = int(res*(y_max-y_min) + 1)
 
-        self.x_points = [x_min + i/float(x_res) for i in xrange(self.x_pix)]
-        self.y_points = [y_min + i/float(y_res) for i in xrange(self.y_pix, 0, -1)]
+        self.x_points = [x_min + i/float(res) for i in xrange(self.x_pix)]
+        self.y_points = [y_min + i/float(res) for i in xrange(self.y_pix, 0, -1)]
         # self.escape_speed        = np.zeros((self.y_pix, self.x_pix), int)
         self.escape_speed        = 0
         self.normed_escape_speed = np.zeros((self.y_pix, self.x_pix), float)
@@ -144,10 +142,9 @@ class MandelbrotSet(object):
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         out_dict = { 'escape_speed':self.escape_speed
                    , 'normed_escape_speed':self.normed_escape_speed
-                   , 'x_res':self.x_res
+                   , 'res':self.res
                    , 'x_min':self.x_min
                    , 'x_max':self.x_max
-                   , 'y_res':self.y_res
                    , 'y_min':self.y_min
                    , 'y_max':self.y_max
                    , 'max_itr':self.max_itr
@@ -166,15 +163,13 @@ def main():
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     for region in sys.argv[1:]:
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        if region == 'full':
-            m = MandelbrotSet( x_res = 3000
-            # m = MandelbrotSet( x_res = 100
+        if region == 'full' or region == 'all':
+            m = MandelbrotSet( res = 2000
+            # m = MandelbrotSet( res = 100
                              # , x_min = -2
                              # , x_max = +0.8
                              , x_min = -3.0
                              , x_max = +1.8
-                             , y_res = 3000
-                             # , y_res = 100
                              # , y_min = -1.2
                              # , y_max = +1.2
                              , y_min = -1.5
@@ -188,13 +183,11 @@ def main():
             m.dump('mand_full.p')
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        if region == 'top':
-            m = MandelbrotSet( x_res = 7000
-            # m = MandelbrotSet( x_res = 500
+        if region == 'top' or region == 'all':
+            m = MandelbrotSet( res = 9000
+            # m = MandelbrotSet( res = 500
                              , x_min = -0.66
                              , x_max = +0.46
-                             , y_res = 7000
-                             # , y_res = 500
                              , y_min = +0.5
                              , y_max = +1.2
                              , max_itr = 250
@@ -206,16 +199,14 @@ def main():
             m.dump('mand_top.p')
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        if region == 'valley':
-            m = MandelbrotSet( x_res = 40000
-            # m = MandelbrotSet( x_res = 500
+        if region == 'valley' or region == 'all':
+            m = MandelbrotSet( res = 18000
+            # m = MandelbrotSet( res = 500
                              , x_min = -1.1
                              , x_max = -0.55
-                             , y_res = 20000
-                             # , y_res = 500
                              , y_min = +0.0
                              , y_max = +0.34375
-                             , max_itr = 500
+                             , max_itr = 250
                              # , max_itr = 20
                              # , max_itr = 50
                              # , escape_radius = 2
@@ -224,13 +215,11 @@ def main():
             m.dump('mand_valley.p')
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        if region == 'head':
-            m = MandelbrotSet( x_res = 20000
-            # m = MandelbrotSet( x_res = 1000
+        if region == 'head' or region == 'all':
+            m = MandelbrotSet( res = 8000
+            # m = MandelbrotSet( res = 1000
                              , x_min = -1.862
                              , x_max = -0.55
-                             , y_res = 20000
-                             # , y_res = 1000
                              , y_min = -0.41
                              , y_max = +0.41
                              , max_itr = 250
@@ -242,25 +231,57 @@ def main():
             m.dump('mand_head.p')
 
         # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        if region == 'satelite':
-            # m = MandelbrotSet( x_res = 26000
-            m = MandelbrotSet( x_res = 20000
-            # m = MandelbrotSet( x_res = 1000
+        if region == 'satelite' or region == 'all':
+            m = MandelbrotSet( res = 54000
+            # m = MandelbrotSet( res = 2000
                              , x_min = -1.53
                              , x_max = -1.35
-                             # , y_res = 26000
-                             , y_res = 20000
-                             # , y_res = 1000
-                             , y_min = -0.055
-                             , y_max = +0.055
+                             , y_min = -0.05624
+                             , y_max = +0.05624
                              # , max_itr = 250
-                             , max_itr = 500
+                             , max_itr = 250
                              # , max_itr = 20
                              # , max_itr = 50
                              # , escape_radius = 2
                              , escape_radius = 1000
                              )
             m.dump('mand_satelite.p')
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        if region == 'satelite_zoom' or region == 'all':
+            m = MandelbrotSet( res = 222000
+            # m = MandelbrotSet( res = 18000
+            # m = MandelbrotSet( res = 3000
+                             , x_min = -1.432
+                             , x_max = -1.3886
+                             , y_min = -0.0070
+                             , y_max = +0.02125
+                             # , max_itr = 250
+                             , max_itr = 250
+                             # , max_itr = 20
+                             # , max_itr = 50
+                             # , escape_radius = 2
+                             , escape_radius = 1000
+                             )
+            m.dump('mand_satelite_zoom.p')
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        if region == 'satelite_zoom2' or region == 'all':
+            m = MandelbrotSet( res = 572000
+            # m = MandelbrotSet( res = 10000
+            # m = MandelbrotSet( res = 3000
+                             , x_min = -1.415
+                             , x_max = -1.3982
+                             , y_min = -0.002
+                             , y_max = +0.0085
+                             # , max_itr = 250
+                             , max_itr = 250
+                             # , max_itr = 20
+                             # , max_itr = 50
+                             # , escape_radius = 2
+                             , escape_radius = 1000
+                             )
+            m.dump('mand_satelite_zoom2.p')
 
 # =============================================================================
 if __name__ == '__main__':

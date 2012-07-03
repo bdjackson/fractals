@@ -41,60 +41,60 @@ def draw_all_cmaps( fractal_data
     # plt.axis('off')
     # plt.savefig('%s_%s.png' % (in_file_name, algo_tag))
 
-    im = plt.imshow( fractal_data[algorithm]
-                   , extent = [ fractal_data['x_min']
-                              , fractal_data['x_max']
-                              , fractal_data['y_min']
-                              , fractal_data['y_max']
-                              ]
-                   , cmap=cm.gray
-                   )
-    plt.axis('off')
-    plt.savefig('%s_%s_gray.png' % (in_file_name, algo_tag))
+    # im = plt.imshow( fractal_data[algorithm]
+    #                , extent = [ fractal_data['x_min']
+    #                           , fractal_data['x_max']
+    #                           , fractal_data['y_min']
+    #                           , fractal_data['y_max']
+    #                           ]
+    #                , cmap=cm.gray
+    #                )
+    # plt.axis('off')
+    # plt.savefig('%s_%s_gray.png' % (in_file_name, algo_tag))
 
-    im = plt.imshow( fractal_data[algorithm]
-                   , extent = [ fractal_data['x_min']
-                              , fractal_data['x_max']
-                              , fractal_data['y_min']
-                              , fractal_data['y_max']
-                              ]
-                   , cmap=cm.hot
-                   )
-    plt.axis('off')
-    plt.savefig('%s_%s_hot.png' % (in_file_name, algo_tag))
+    # im = plt.imshow( fractal_data[algorithm]
+    #                , extent = [ fractal_data['x_min']
+    #                           , fractal_data['x_max']
+    #                           , fractal_data['y_min']
+    #                           , fractal_data['y_max']
+    #                           ]
+    #                , cmap=cm.hot
+    #                )
+    # plt.axis('off')
+    # plt.savefig('%s_%s_hot.png' % (in_file_name, algo_tag))
 
-    im = plt.imshow( fractal_data[algorithm]
-                   , extent = [ fractal_data['x_min']
-                              , fractal_data['x_max']
-                              , fractal_data['y_min']
-                              , fractal_data['y_max']
-                              ]
-                   , cmap=cm.spectral
-                   )
-    plt.axis('off')
-    plt.savefig('%s_%s_spectral.png' % (in_file_name, algo_tag))
+    # im = plt.imshow( fractal_data[algorithm]
+    #                , extent = [ fractal_data['x_min']
+    #                           , fractal_data['x_max']
+    #                           , fractal_data['y_min']
+    #                           , fractal_data['y_max']
+    #                           ]
+    #                , cmap=cm.spectral
+    #                )
+    # plt.axis('off')
+    # plt.savefig('%s_%s_spectral.png' % (in_file_name, algo_tag))
 
-    im = plt.imshow( fractal_data[algorithm]
-                   , extent = [ fractal_data['x_min']
-                              , fractal_data['x_max']
-                              , fractal_data['y_min']
-                              , fractal_data['y_max']
-                              ]
-                   , cmap=cm.bone
-                   )
-    plt.axis('off')
-    plt.savefig('%s_%s_bone.png' % (in_file_name, algo_tag))
+    # im = plt.imshow( fractal_data[algorithm]
+    #                , extent = [ fractal_data['x_min']
+    #                           , fractal_data['x_max']
+    #                           , fractal_data['y_min']
+    #                           , fractal_data['y_max']
+    #                           ]
+    #                , cmap=cm.bone
+    #                )
+    # plt.axis('off')
+    # plt.savefig('%s_%s_bone.png' % (in_file_name, algo_tag))
 
-    im = plt.imshow( fractal_data[algorithm]
-                   , extent = [ fractal_data['x_min']
-                              , fractal_data['x_max']
-                              , fractal_data['y_min']
-                              , fractal_data['y_max']
-                              ]
-                   , cmap=cm.copper
-                   )
-    plt.axis('off')
-    plt.savefig('%s_%s_copper.png' % (in_file_name, algo_tag))
+    # im = plt.imshow( fractal_data[algorithm]
+    #                , extent = [ fractal_data['x_min']
+    #                           , fractal_data['x_max']
+    #                           , fractal_data['y_min']
+    #                           , fractal_data['y_max']
+    #                           ]
+    #                , cmap=cm.copper
+    #                )
+    # plt.axis('off')
+    # plt.savefig('%s_%s_copper.png' % (in_file_name, algo_tag))
 
     im = plt.imshow( fractal_data[algorithm]
                    , extent = [ fractal_data['x_min']
@@ -183,13 +183,12 @@ def draw_all_cmaps( fractal_data
     #                )
     # plt.axis('off')
     # plt.savefig('%s_%s_pink.png' % (in_file_name, algo_tag))
-    
 
 # -----------------------------------------------------------------------------
 def draw_fractal(in_file_name):
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     plt.figure(figsize=[28.8, 18], dpi=100)
-    plt.axes([0,0,1,1], frameon = True) 
+    plt.axes([0,0,1,1], frameon = True)
     plt.axis('off')
 
     in_file = open('%s.p' % in_file_name, 'rb')
@@ -218,21 +217,27 @@ def main():
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     for region in sys.argv[1:]:
-        if region == 'full':
+        if region == 'full' or region == 'all':
             print 'printing full mandelbrot set'
             draw_fractal('mand_full')
-        if region == 'top':
+        if region == 'top' or region == 'all':
             print 'printing top portion of mandelbrot set'
             draw_fractal('mand_top')
-        if region == 'valley':
+        if region == 'valley' or region == 'all':
             print 'printing valley region of mandelbrot set'
             draw_fractal('mand_valley')
-        if region == 'head':
+        if region == 'head' or region == 'all':
             print 'printing head of mandelbrot set'
             draw_fractal('mand_head')
-        if region == 'satelite':
+        if region == 'satelite' or region == 'all':
             print 'printing satelite of mandelbrot set'
             draw_fractal('mand_satelite')
+        if region == 'satelite_zoom' or region == 'all':
+            print 'printing satelite (zoom) of mandelbrot set'
+            draw_fractal('mand_satelite_zoom')
+        if region == 'satelite_zoom2' or region == 'all':
+            print 'printing satelite (zoom) of mandelbrot set'
+            draw_fractal('mand_satelite_zoom2')
 
 # =============================================================================
 if __name__ == '__main__':
