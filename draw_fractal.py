@@ -31,16 +31,17 @@ def draw_all_cmaps( fractal_data
                   , algo_tag
                   ):
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    im = plt.imshow( fractal_data[algorithm]
-                   , extent = [ fractal_data['x_min']
-                              , fractal_data['x_max']
-                              , fractal_data['y_min']
-                              , fractal_data['y_max']
-                              ]
-                   )
-    plt.axis('off')
-    plt.savefig('%s_%s.png' % (in_file_name, algo_tag))
+    # im = plt.imshow( fractal_data[algorithm]
+    #                , extent = [ fractal_data['x_min']
+    #                           , fractal_data['x_max']
+    #                           , fractal_data['y_min']
+    #                           , fractal_data['y_max']
+    #                           ]
+    #                )
+    # plt.axis('off')
+    # plt.savefig('%s_%s.png' % (in_file_name, algo_tag))
 
+    print 'drawing gray color map'
     im = plt.imshow( fractal_data[algorithm]
                    , extent = [ fractal_data['x_min']
                               , fractal_data['x_max']
@@ -52,6 +53,7 @@ def draw_all_cmaps( fractal_data
     plt.axis('off')
     plt.savefig('%s_%s_gray.png' % (in_file_name, algo_tag))
 
+    print 'drawing hot color map'
     im = plt.imshow( fractal_data[algorithm]
                    , extent = [ fractal_data['x_min']
                               , fractal_data['x_max']
@@ -63,6 +65,7 @@ def draw_all_cmaps( fractal_data
     plt.axis('off')
     plt.savefig('%s_%s_hot.png' % (in_file_name, algo_tag))
 
+    print 'drawing spectral color map'
     im = plt.imshow( fractal_data[algorithm]
                    , extent = [ fractal_data['x_min']
                               , fractal_data['x_max']
@@ -74,6 +77,7 @@ def draw_all_cmaps( fractal_data
     plt.axis('off')
     plt.savefig('%s_%s_spectral.png' % (in_file_name, algo_tag))
 
+    print 'drawing bone color map'
     im = plt.imshow( fractal_data[algorithm]
                    , extent = [ fractal_data['x_min']
                               , fractal_data['x_max']
@@ -85,6 +89,7 @@ def draw_all_cmaps( fractal_data
     plt.axis('off')
     plt.savefig('%s_%s_bone.png' % (in_file_name, algo_tag))
 
+    print 'drawing copper color map'
     im = plt.imshow( fractal_data[algorithm]
                    , extent = [ fractal_data['x_min']
                               , fractal_data['x_max']
@@ -96,6 +101,7 @@ def draw_all_cmaps( fractal_data
     plt.axis('off')
     plt.savefig('%s_%s_copper.png' % (in_file_name, algo_tag))
 
+    print 'drawing jet color map'
     im = plt.imshow( fractal_data[algorithm]
                    , extent = [ fractal_data['x_min']
                               , fractal_data['x_max']
